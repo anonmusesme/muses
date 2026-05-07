@@ -1,0 +1,264 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "citeroots",
+  "description": "CiteRoots is a two-layer measurement framework that complements the MUSES prospective retrieval benchmark by tightening 'any future citation' toward citations that play generative roles in local text (CiteRoots-Rhetoric: passage-level rhetorical role validated against ~1,200 human-gold contexts at Cohen's kappa = 0.896) and citations the citing-paper authors themselves identify as intellectual roots (CiteRoots-Endorsement: 1,518 author-attested generative-inspiration pairs from 753 focal papers, collected through an author-response adjudication workbench). The two layers are empirically separable on the same audit pairs (kappa = 0.896 for rhetorical labeling vs. kappa = 0.037 against author endorsement), establishing that paper-level intellectual debt is not recoverable from local citation rhetoric alone.",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "version": "1.0.0",
+  "url": "https://huggingface.co/datasets/anon-muses-neurips/citeroots",
+  "citeAs": "[Anonymized at submission. Will be filled in at de-anonymization.]",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "datePublished": "2026-05-06",
+  "creator": {
+    "@type": "Organization",
+    "name": "Anonymous (NeurIPS 2026 ED submission)"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Anonymous (NeurIPS 2026 ED submission)"
+  },
+  "keywords": [
+    "citation intent classification",
+    "rhetorical roles",
+    "author endorsement",
+    "scientific inspiration",
+    "S2ORC derivative",
+    "human gold annotations",
+    "LLM-as-judge"
+  ],
+  "rai:dataCollection": "Two collection pipelines feed CiteRoots: (1) Rhetorical layer: each benchmark-aligned focal->cited citation context is classified by a frontier LLM teacher (gpt-5.4-mini with the v6_literature prompt at medium reasoning effort) into a six-category taxonomy, then aggregated to paper-level binary ROOT/non-ROOT labels under a precision-first rule. A distilled Qwen3-8B + LoRA open companion judge is released for scalable inference. ~1,200 contexts were independently human-annotated to validate the teacher (Cohen's kappa = 0.896). (2) Endorsement layer: recent-paper authors were contacted via the workbench and asked which prior works they regarded as generative inspirations for a focal paper of theirs; responses were human-reviewed before entering the released cohort.",
+  "rai:dataCollectionTimeframe": "2026.",
+  "rai:dataCollectionType": [
+    "LLM-as-judge derivative labels",
+    "Author-response survey",
+    "Human gold annotation"
+  ],
+  "rai:dataPreprocessingProtocol": "Rhetorical labels: per-context six-way classification, then paper-level binary aggregation under a precision-first rule (positive iff at least one linked context is judged ROOT). Endorsement pairs: human review for review-paper status, self-citation overlap, and consent before inclusion.",
+  "rai:annotationsPerExample": "Rhetorical layer: one binary ROOT/non-ROOT label per (focal_corpusid, candidate_corpusid) edge. Endorsement layer: one audit verdict per author-attested pair.",
+  "rai:annotatorDemographics": "Three trained human annotators contributed to the gold audit set. Annotator demographics are anonymized for double-blind review.",
+  "rai:dataAnnotationAnalysis": "Inter-annotator agreement on the 200-context shared subset: Cohen's kappa = 0.782 (binary tier), 0.715 (six-way). LLM teacher vs. human gold: kappa = 0.896. Distilled Qwen3-8B student vs. teacher: kappa = 0.771.",
+  "rai:dataReleaseMaintenancePlan": "See MAINTENANCE.md. SemVer-versioned, hosted on HuggingFace + GitHub. Right-to-erasure protocol available indefinitely for endorsement participants.",
+  "rai:dataUseCases": "Citation-intent classification benchmark. Author-endorsement vs. rhetorical role separability analysis. Training paper-level endorsement classifiers. Tightening retrieval slices on the companion MUSES benchmark.",
+  "rai:dataLimitations": "Rhetorical layer uses a single canonical judge family (gpt-5.4-mini) plus its distilled student; cross-family judge robustness is documented as a known robustness item. Endorsement cohort is responder-conditioned; absolute endorsement-rate statistics may not generalize to non-responders. Endorsement cohort scale is ~1,500 pairs at v1.0.0; treat as a high-signal calibration slice rather than a full standalone benchmark.",
+  "rai:dataBiases": "Rhetorical labels are produced by a single LLM judge family; while binary agreement with human gold is high (kappa = 0.896), any judge-family-specific bias propagates into the labels. Endorsement cohort field distribution (Biology, Computer Science, Medicine, Engineering, Chemistry) reflects who responded to the workbench; chi-square test on journal-family distribution detects no strong skew (p = 0.48 at current n).",
+  "rai:personalSensitiveInformation": "The endorsement layer was collected with explicit author consent (see consent_protocol.md). We redistribute only structured pair-level outcomes after human review: focal_corpusid, candidate_corpusid, audit verdict, eligibility flags, coarse field family. We do NOT redistribute raw author responses, free-text rationales, email addresses, or any other personally identifying information beyond what S2ORC's public author tables already expose via authorid keys.",
+  "rai:safetyAndPrivacy": "Author consent is documented in consent_protocol.md. Raw narratives and contact information are excluded from the release. A right-to-erasure protocol is available indefinitely for endorsement participants. The rhetorical layer does not contain free-text content; it contains category labels over identifier-keyed citation edges.",
+  "rai:dataSocialImpact": "Intended use: research evaluation of citation-function classification, author-endorsement modeling, and inspiration retrieval. Not intended for hiring, funding, or career-advancement decisions, nor for adversarial citation generation.",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "rhetoric_labels_paper_level.parquet",
+      "name": "rhetoric_labels_paper_level.parquet",
+      "description": "Paper-level binary ROOT/non-ROOT labels for benchmark-aligned focal->cited edges. Aggregated from per-context judgments under a precision-first rule.",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/citeroots/resolve/main/rhetoric_labels_paper_level.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "43e7ff410aa662e706c30723d0175404e3898771a7e718bae0a7a33348bd05c9"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "human_gold_audit.parquet",
+      "name": "human_gold_audit.parquet",
+      "description": "Human-gold audit set: ~1,200 context-level annotations with rater agreement metadata. Used to validate the canonical LLM teacher (kappa = 0.896).",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/citeroots/resolve/main/human_gold_audit.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "bd969d1d09dfadd095c905e3ca0edcfcaef83ef2481a5c42c6257223b3e05af9"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "endorsement_pairs.parquet",
+      "name": "endorsement_pairs.parquet",
+      "description": "1,518 author-attested generative-inspiration pairs from 753 focal papers. NO free-text columns. NO author-identifying columns.",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/citeroots/resolve/main/endorsement_pairs.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "811b69d74ae02b50e76343fe2aad4d620427c4709cff649b9ede3549fb2692f7"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "endorsement_subsets.json",
+      "name": "endorsement_subsets.json",
+      "description": "Manifest defining the 435 context-linked subset and the 402 retrieval-evaluable subset of the endorsement cohort.",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/citeroots/resolve/main/endorsement_subsets.json",
+      "encodingFormat": "application/json",
+      "sha256": "9af6e66eb7a643c502770bd19e6e322a84c9b953e8cc164353de3c5c2d875a9a"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "cohort_characterization.parquet",
+      "name": "cohort_characterization.parquet",
+      "description": "Aggregate cohort statistics for the 753 focal papers: field family, year buckets, journal family. No PII.",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/citeroots/resolve/main/cohort_characterization.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "0b6895ab93ac81539f598db8bd9045fbfb1b6f4c9e4a4a25466b28382a96c956"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "taxonomy_v7_0.yml",
+      "name": "taxonomy_v7_0.yml",
+      "description": "The six-category citation-intent taxonomy used by both the rhetorical labeler and the human annotation workbench.",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/citeroots/resolve/main/taxonomy_v7_0.yml",
+      "encodingFormat": "application/yaml",
+      "sha256": "46b8ae884cce4f85d514e602fc14ff9cf382e5d3c12b4e13ecdaceee49497bd5"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "prompt_v6_literature.txt",
+      "name": "prompt_v6_literature.txt",
+      "description": "Verbatim text of the canonical teacher prompt used by gpt-5.4-mini at medium reasoning effort.",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/citeroots/resolve/main/prompt_v6_literature.txt",
+      "encodingFormat": "text/plain",
+      "sha256": "334baa4aff264386b064d2a48ef5f04cd225c91f8b58ea214497e7a4abbc5937"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "rhetoric_paper_level",
+      "name": "rhetoric_paper_level",
+      "description": "Paper-level binary ROOT/non-ROOT labels.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "rhetoric_paper_level/focal_corpusid",
+          "name": "focal_corpusid",
+          "description": "S2ORC corpusid of the focal (citing) paper.",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "rhetoric_labels_paper_level.parquet"
+            },
+            "extract": {
+              "column": "focal_corpusid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "rhetoric_paper_level/candidate_corpusid",
+          "name": "candidate_corpusid",
+          "description": "S2ORC corpusid of the cited (candidate) paper.",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "rhetoric_labels_paper_level.parquet"
+            },
+            "extract": {
+              "column": "candidate_corpusid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "rhetoric_paper_level/label",
+          "name": "label",
+          "description": "Binary aggregated label: ROOT or NON_ROOT.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rhetoric_labels_paper_level.parquet"
+            },
+            "extract": {
+              "column": "label"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "endorsement_pairs",
+      "name": "endorsement_pairs",
+      "description": "Author-attested generative-inspiration pairs.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "endorsement_pairs/focal_corpusid",
+          "name": "focal_corpusid",
+          "description": "S2ORC corpusid of the focal (citing) paper.",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "endorsement_pairs.parquet"
+            },
+            "extract": {
+              "column": "focal_corpusid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "endorsement_pairs/candidate_corpusid",
+          "name": "candidate_corpusid",
+          "description": "S2ORC corpusid of the cited (inspiration) paper.",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "endorsement_pairs.parquet"
+            },
+            "extract": {
+              "column": "candidate_corpusid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "endorsement_pairs/audit_status",
+          "name": "audit_status",
+          "description": "Verdict from human review: passed, flagged_self_cite, flagged_review_paper, excluded.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "endorsement_pairs.parquet"
+            },
+            "extract": {
+              "column": "audit_status"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

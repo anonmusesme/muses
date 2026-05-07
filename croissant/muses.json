@@ -1,0 +1,198 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "muses",
+  "description": "MUSES (Mining Unexplored Scientific Evidence to Spark novel hypothesis generation) is the first million-instance benchmark for prospective intellectual-roots prediction. Given an author's documented publication history at time t, the task is to rank a fixed pool of 2.33M S2ORC corpusids by how likely each one is to enter the author's next paper's bibliography. The benchmark is hard along two orthogonal axes: a familiarity axis (CiteNext, CiteNew, CiteNew-Isolated) and a functional axis (any citation, rhetorical ROOT, author endorsement; latter two layers in companion CiteRoots dataset).",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "version": "1.0.0",
+  "url": "https://huggingface.co/datasets/anon-muses-neurips/muses",
+  "citeAs": "[Anonymized at submission. Will be filled in at de-anonymization.]",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "datePublished": "2026-05-06",
+  "creator": {
+    "@type": "Organization",
+    "name": "Anonymous (NeurIPS 2026 ED submission)"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Anonymous (NeurIPS 2026 ED submission)"
+  },
+  "keywords": [
+    "prospective citation prediction",
+    "intellectual roots prediction",
+    "scientific literature retrieval",
+    "S2ORC derivative",
+    "benchmark"
+  ],
+  "rai:dataCollection": "MUSES is derived deterministically from the Allen Institute's S2ORC release by applying time-safety filters (publication-cutoff enforcement), text-readiness filters (parsed-PDF availability), and author-disjoint career-midpoint splits. The 2,330,779-paper candidate pool and the 1,038,780 retrieval instances are computed from S2ORC; this Croissant manifest distributes only the identifier-derived files we ourselves produced, not S2ORC content.",
+  "rai:dataCollectionTimeframe": "S2ORC source: as licensed by Allen Institute. MUSES instance construction: 2026.",
+  "rai:dataCollectionType": [
+    "Derivative of upstream public corpus"
+  ],
+  "rai:dataPreprocessingProtocol": "Time-safety filtering, text-readiness filtering, author-disjoint career-midpoint split assignment, familiarity-tier construction (CiteNext, CiteNew, CiteNew-Isolated). Full protocol documented in DATASHEET.md \u00a74 and Appendix A of the accompanying paper.",
+  "rai:annotationsPerExample": "Three target sets per (authorid, focal_corpusid) instance: CiteNext, CiteNew, CiteNew-Isolated. Each target set is a list of corpusids derived deterministically from the focal author's first subsequent eligible paper.",
+  "rai:annotatorDemographics": "Not applicable: targets are derived deterministically from S2ORC bibliography records, not from human annotation.",
+  "rai:dataAnnotationAnalysis": "Not applicable for MUSES proper. The companion CiteRoots dataset contains human-annotated layers; see its Croissant manifest.",
+  "rai:dataReleaseMaintenancePlan": "See MAINTENANCE.md. SemVer-versioned, hosted on HuggingFace + GitHub, archival mirrors on Zenodo at major releases. Maintainer commitment: 5+ years public availability from camera-ready.",
+  "rai:dataUseCases": "Comparative evaluation of retrieval methods on prospective scientific-literature tasks. Studying citation-graph structure for inspiration vs. background separation. Training paper-level endorsement classifiers (with companion CiteRoots labels).",
+  "rai:dataLimitations": "Fixed-pool evaluation; open-corpus retrieval is deferred. Author-disjoint splits chosen because the prediction task is conditional on author identity; paper-disjoint variants are a natural extension. Author-disambiguation noise is bounded by the release audit and does not drive the headline gap. Year/venue/abstract are NOT redistributed \u2014 users must join with S2ORC.",
+  "rai:dataBiases": "The candidate pool and the focal-paper instances inherit the field-distribution biases of S2ORC, which over-represents Computer Science, Biology, and Medicine relative to humanities and area studies. We document field distribution in DATASHEET.md and Appendix A.",
+  "rai:personalSensitiveInformation": "The dataset references author identity only via authorid, which keys into S2ORC's public author tables. No new identifying information beyond what S2ORC already publicly exposes is added by MUSES. No raw text, no email addresses, no contact information is redistributed.",
+  "rai:safetyAndPrivacy": "Author-disjoint splits prevent train/test leakage. The dataset does not contain content that might be considered offensive or threatening. The dataset does not enable re-identification of individuals beyond what S2ORC already exposes.",
+  "rai:dataSocialImpact": "Intended use: research evaluation of AI systems for prospective scientific-literature retrieval. Not intended for hiring, funding, or career-advancement decisions about individual researchers, or for adversarial citation generation.",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "instance_splits.parquet",
+      "name": "instance_splits.parquet",
+      "description": "Defines the 1,038,780 (authorid, focal_corpusid) retrieval instances and their author-disjoint career-midpoint split assignments.",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/muses/resolve/main/instance_splits.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "7fab11e771fe6b3efb78b640edca5bab4e9e96cbdcfdf17c7a677ee9865e696a"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "tier_targets/citenext.parquet",
+      "name": "tier_targets/citenext.parquet",
+      "description": "CiteNext positive sets per focal paper. Schema: (focal_corpusid, target_corpusid).",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/muses/resolve/main/tier_targets/citenext.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "12f189825af8d49c3e3aa095351a12512ee660136e026a179b448e4e01a1b2c1"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "tier_targets/citenew.parquet",
+      "name": "tier_targets/citenew.parquet",
+      "description": "CiteNew positive sets per focal paper (excludes prior reading shadow). Schema: (focal_corpusid, target_corpusid).",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/muses/resolve/main/tier_targets/citenew.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "6f9b3be264b9ec376945952e28d00eb46e15520abb9724ae548a17f09740e440"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "tier_targets/citenew_iso.parquet",
+      "name": "tier_targets/citenew_iso.parquet",
+      "description": "CiteNew-Isolated positive sets per focal paper (excludes both prior reading shadow and coauthor diffusion). Schema: (focal_corpusid, target_corpusid).",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/muses/resolve/main/tier_targets/citenew_iso.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "6b722c329a7321bbe63b6d6e46f8c1537b3c616de71ba57ad6eb083c1bb302be"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "candidate_pool.parquet",
+      "name": "candidate_pool.parquet",
+      "description": "The fixed candidate universe: 2,330,779 S2ORC corpusids. Schema: (corpusid).",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/muses/resolve/main/candidate_pool.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "42c2e6758d3258801ac5da5fe46869b1424b173f64e3d1a0b077535362f3bad2"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "candidate_pool_derived.parquet",
+      "name": "candidate_pool_derived.parquet",
+      "description": "Our derived flags for the candidate pool. Schema: (corpusid, time_safe, text_ready, primary_field_kd). Note: primary_field_kd is OUR classification, not S2ORC's s2_field_of_study.",
+      "contentUrl": "https://huggingface.co/datasets/anon-muses-neurips/muses/resolve/main/candidate_pool_derived.parquet",
+      "encodingFormat": "application/x-parquet",
+      "sha256": "e8da21e075b353e9870ea24c5a0da1bd1da3b527f8c2d7bbddbba805b406cc71"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "instances",
+      "name": "instances",
+      "description": "Retrieval instances and their split assignment.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "instances/authorid",
+          "name": "authorid",
+          "description": "S2ORC author identifier (keys into S2ORC's public author tables).",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "instance_splits.parquet"
+            },
+            "extract": {
+              "column": "authorid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "instances/focal_corpusid",
+          "name": "focal_corpusid",
+          "description": "S2ORC corpusid of the focal (citing) paper.",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "instance_splits.parquet"
+            },
+            "extract": {
+              "column": "focal_corpusid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "instances/split",
+          "name": "split",
+          "description": "Author-disjoint career-midpoint split assignment: train (midpoint < 2018), val (2018-2020), test (2021-2023).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "instance_splits.parquet"
+            },
+            "extract": {
+              "column": "split"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
