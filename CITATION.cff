@@ -1,0 +1,38 @@
+# CITATION.cff — Citation File Format for the MUSES + CiteRoots release.
+# See https://citation-file-format.github.io/ for the spec.
+# At de-anonymization, replace the `authors`, `repository-code`, `url`,
+# and `preferred-citation.authors` blocks with real values.
+
+cff-version: 1.2.0
+message: "If you use the MUSES benchmark or the CiteRoots labeling layers, please cite the accompanying paper."
+type: dataset
+title: "MUSES: Mining Unexplored Scientific Evidence to Spark Novel Hypothesis Generation"
+abstract: "MUSES is the first million-instance benchmark for prospective intellectual-roots prediction. Given an author's documented publication history at time t, the task is to retrieve the prior works the author will engage with in their next paper. Released alongside CiteRoots, a two-layer measurement framework (passage-level rhetorical role + paper-level author-confirmed endorsement). Validated against ~1,200 human-gold contexts (κ=0.896 LLM teacher vs. human, κ=0.037 against author endorsement on the same audit, demonstrating empirical separability of rhetorical and endorsed targets)."
+authors:
+  - name: "Anonymous (NeurIPS 2026 Evaluations & Datasets submission)"
+version: "1.0.0"
+date-released: "2026-05-07"
+license: CC-BY-4.0
+license-url: "https://creativecommons.org/licenses/by/4.0/"
+repository-code: "https://github.com/anonmusesme/muses"
+repository-data:
+  - "https://huggingface.co/datasets/anon-muses-neurips/muses"
+  - "https://huggingface.co/datasets/anon-muses-neurips/citeroots"
+url: "https://huggingface.co/datasets/anon-muses-neurips/muses"
+keywords:
+  - prospective citation prediction
+  - intellectual roots prediction
+  - scientific literature retrieval
+  - citation intent classification
+  - LLM-as-judge
+  - benchmark
+  - S2ORC derivative
+preferred-citation:
+  type: conference-paper
+  title: "MUSES: Mining Unexplored Scientific Evidence to Spark Novel Hypothesis Generation"
+  authors:
+    - name: "Anonymous (NeurIPS 2026 Evaluations & Datasets submission)"
+  year: 2026
+  conference:
+    name: "NeurIPS 2026 Evaluations and Datasets Track"
+  notes: "Anonymized for double-blind review. Citation will be filled in at camera-ready."

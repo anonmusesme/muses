@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "benchmark": "MUSES",
+  "release_version": "v1.0.0",
+  "metric": "hit@100",
+  "splits": {
+    "test": {
+      "n_focals_per_tier": {
+        "citenext": 168613,
+        "citenew": 167568,
+        "citenew_isolated": 166180
+      }
+    }
+  },
+  "headline": {
+    "broad_tiers": {
+      "method_order": ["popularity", "coauthor_2hop", "bm25", "bge_large_retrieval", "e5_large_v2_retrieval", "reference_centroid_specter2", "single_centroid_specter2", "mc_specter2_K16", "bge_large_finetuned", "sequence_trajectory", "trajectory_plus_mc_specter2_rrf"],
+      "results": {
+        "popularity":                       {"citenext": 0.017, "citenew": 0.011, "citenew_isolated": 0.004},
+        "coauthor_2hop":                    {"citenext": 0.002, "citenew": 0.001, "citenew_isolated": 0.001},
+        "bm25":                             {"citenext": 0.307, "citenew": 0.248, "citenew_isolated": 0.217},
+        "bge_large_retrieval":              {"citenext": 0.409, "citenew": 0.321, "citenew_isolated": 0.278},
+        "e5_large_v2_retrieval":            {"citenext": 0.401, "citenew": 0.310, "citenew_isolated": 0.266},
+        "reference_centroid_specter2":      {"citenext": 0.361, "citenew": 0.254, "citenew_isolated": 0.209},
+        "single_centroid_specter2":         {"citenext": 0.447, "citenew": 0.347, "citenew_isolated": 0.296},
+        "mc_specter2_K16":                  {"citenext": 0.534, "citenew": 0.424, "citenew_isolated": 0.366},
+        "bge_large_finetuned":              {"citenext": 0.063, "citenew": 0.055, "citenew_isolated": 0.049},
+        "sequence_trajectory":              {"citenext": 0.169, "citenew": 0.123, "citenew_isolated": 0.103},
+        "trajectory_plus_mc_specter2_rrf":  {"citenext": 0.076, "citenew": 0.064, "citenew_isolated": 0.057}
+      },
+      "best_method": "mc_specter2_K16",
+      "headline_summary": "MC-SPECTER2 (K=16, no fine-tuning, no reranker, no LLM call) wins all three broad tiers."
+    },
+    "rhetorical_slice": {
+      "method_order": ["popularity", "coauthor_2hop", "bm25", "bge_large_retrieval", "e5_large_v2_retrieval", "reference_centroid_specter2", "single_centroid_specter2", "mc_specter2_K16", "bge_large_finetuned", "sequence_trajectory", "trajectory_plus_mc_specter2_rrf"],
+      "results": {
+        "popularity":                       {"citeroots_new": 0.001, "citeroots_isolated": 0.001},
+        "bm25":                             {"citeroots_new": 0.191, "citeroots_isolated": 0.197},
+        "bge_large_retrieval":              {"citeroots_new": 0.186, "citeroots_isolated": 0.190},
+        "e5_large_v2_retrieval":            {"citeroots_new": 0.180, "citeroots_isolated": 0.183},
+        "reference_centroid_specter2":      {"citeroots_new": 0.102, "citeroots_isolated": 0.100},
+        "single_centroid_specter2":         {"citeroots_new": 0.160, "citeroots_isolated": 0.161},
+        "mc_specter2_K16":                  {"citeroots_new": 0.205, "citeroots_isolated": 0.207},
+        "bge_large_finetuned":              {"citeroots_new": 0.032, "citeroots_isolated": 0.033},
+        "sequence_trajectory":              {"citeroots_new": 0.039, "citeroots_isolated": 0.040},
+        "trajectory_plus_mc_specter2_rrf":  {"citeroots_new": 0.034, "citeroots_isolated": 0.035}
+      },
+      "n_positives_per_tier": {"citeroots_new": 5702, "citeroots_isolated": 4483},
+      "headline_summary": "Functional tightening collapses the citation-pretrained lead: MC-SPECTER2 vs. BM25 narrows from +0.176 (CiteNew) to +0.014 (rhetorical CiteNew). 92% relative compression."
+    },
+    "endorsement_endpoint": {
+      "method_order": ["single_centroid_specter2", "mc_specter2_K8", "mc_specter2_K16", "mc_specter2_K24"],
+      "results_n257_citenew_subcohort": {
+        "single_centroid_specter2": 0.148,
+        "mc_specter2_K8":           0.160,
+        "mc_specter2_K16":          0.171,
+        "mc_specter2_K24":          0.163
+      },
+      "results_n145_habitual_subcohort": {
+        "mc_specter2_K16":          0.393
+      },
+      "cohort": {
+        "n_total":              402,
+        "n_habitual":           145,
+        "n_citenew":            257,
+        "n_focals":             134,
+        "split_by":             "is_in_reading_shadow"
+      },
+      "headline_summary": "Author-endorsed CiteNew sub-cohort h@100 = 0.171; further 17% relative decline below the rhetorical CiteNew slice (0.205)."
+    },
+    "discovery_ceiling": {
+      "metric": "fraction_unsolved_by_all_methods",
+      "results_at_K_1000": {"citenext": 0.478, "citenew": 0.500, "citenew_isolated": 0.498},
+      "results_at_K_100":  {"citenext": 0.622, "citenew": 0.661, "citenew_isolated": 0.675},
+      "results_at_K_10":   {"citenext": 0.715, "citenew": 0.770, "citenew_isolated": 0.791},
+      "n_method_classes_in_set": 9,
+      "headline_summary": "47.8 / 50.0 / 49.8 percent of broad-tier test instances remain unsolved by every evaluated method class at K=1000."
+    },
+    "kappa_validation": {
+      "llm_teacher_vs_human_gold_binary":      0.896,
+      "llm_teacher_vs_human_gold_six_way":     0.713,
+      "distilled_student_vs_teacher_binary":   0.771,
+      "human_irr_tier":                        0.782,
+      "human_irr_six_way":                     0.715,
+      "llm_teacher_vs_author_endorsement":     0.037,
+      "distilled_student_vs_author_endorsement": 0.002,
+      "strategy_b_overall":                    0.160,
+      "strategy_b_habitual":                   0.337,
+      "strategy_b_citenew":                    0.051,
+      "audit_set_size":                        1202,
+      "headline_summary": "Same LLM judge family reaches kappa=0.896 on rhetorical role but only 0.037 against author endorsement on the same audit, demonstrating empirical separability."
+    },
+    "diagonal_traversal": {
+      "method": "mc_specter2_K16",
+      "metric": "hit@100",
+      "trajectory": [
+        {"target": "any_citation",              "tier": "CiteNext",       "value": 0.534, "n_focals": 168613},
+        {"target": "any_citation",              "tier": "CiteNew",        "value": 0.424, "n_focals": 167568},
+        {"target": "rhetorical_root",           "tier": "CiteNew",        "value": 0.205, "n_focals": 5702},
+        {"target": "author_endorsed",           "tier": "CiteNew_subset", "value": 0.171, "n_focals": 134}
+      ],
+      "decline_factor": 3.12,
+      "headline_summary": "3.1x decline along the two-axis diagonal (familiarity tightening + functional tightening)."
+    }
+  },
+  "submission_form_data": {
+    "openreview_dataset_url":        "https://huggingface.co/datasets/anon-muses-neurips/muses",
+    "openreview_companion_dataset":  "https://huggingface.co/datasets/anon-muses-neurips/citeroots",
+    "openreview_companion_model":    "https://huggingface.co/anon-muses-neurips/citeroots-rhetoric-judge-qwen3-8b",
+    "openreview_code_url":           "https://github.com/anonmusesme/muses",
+    "license":                       "CC-BY-4.0 (labels), Apache-2.0 (code)"
+  },
+  "reproduce_locally": {
+    "verify_all_22_paper_claims":    "python scripts/verify.py",
+    "score_method_on_broad_tier":    "python scripts/eval_test_full.py --predictions <file>.parquet --tier {citenext|citenew|citenew_iso}",
+    "score_method_on_rhetorical":    "python scripts/eval_test_full_citeroots.py --predictions <file>.parquet --slice {citeroots_new|citeroots_iso}"
+  }
+}
