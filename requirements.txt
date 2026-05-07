@@ -1,0 +1,18 @@
+# Core (always required)
+pandas>=2.0
+pyarrow>=14.0
+huggingface_hub>=0.20
+numpy>=1.24
+
+# For the eval/verify scripts only — no other deps needed
+# scikit-learn>=1.0   # only if you use the in-script kmeans clustering
+
+# For mc_specter2_inference.py:
+torch>=2.0
+transformers>=4.45
+sentence-transformers>=2.2  # SPECTER2 uses this for the standard pooling pattern
+
+# For judge_inference.py:
+# transformers needs to support `Cache`/`DynamicCache` for peft >=0.10
+peft>=0.10,<0.20
+# transformers already pinned above; the 4.45+ pin satisfies peft's Cache import
