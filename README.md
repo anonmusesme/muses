@@ -9,7 +9,7 @@ Code for the NeurIPS 2026 Evaluations & Datasets submission. The dataset parquet
 ## Quick start — reproduce all 22 paper claims
 
 ```bash
-pip install pandas pyarrow huggingface_hub
+pip install -r requirements.txt
 python scripts/verify.py
 ```
 
@@ -27,10 +27,28 @@ python scripts/eval_test_full_citeroots.py --predictions my_method.parquet --sli
 
 Predictions parquet schema: `focal_corpusid (int64), candidate_corpusid (int64), rank (int)`.
 
+## Run the open distilled rhetorical judge
+
+```bash
+python scripts/judge_inference.py \
+    --adapter-path anon-muses-neurips/citeroots-rhetoric-judge-qwen3-8b \
+    --input contexts.jsonl \
+    --output predictions.parquet
+```
+
+## Run the headline retriever
+
+```bash
+python scripts/mc_specter2_inference.py --help
+```
+
+Requires joining the candidate pool with S2ORC text under your S2ORC license.
+
 ## What's in this repo
 
 - `scripts/` — eval + inference + verify scripts (Apache 2.0)
-- `cards/` — HuggingFace dataset cards (reference; live on HF)
+- `requirements.txt` — pinned Python deps for clean setup
+- `cards/` — HuggingFace dataset cards (for reference; live on HF)
 - `croissant/` — Croissant 1.0 manifests with full RAI metadata
 - `DATASHEET.md` — Gebru-style 7-section datasheet
 - `LICENSE.md`, `MAINTENANCE.md`, `consent_protocol.md`, `RELEASE_INVENTORY.md`, `SHA256SUMS.txt`
